@@ -1,0 +1,9 @@
+#!/bin/bash
+function screenIsLocked { [ "$(/usr/libexec/PlistBuddy -c "print :IOConsoleUsers:0:CGSSessionScreenIsLocked" /dev/stdin 2>/dev/null <<< "$(ioreg -n Root -d1 -a)")" = "true" ] && return 0 || return 1; }
+
+while [[ true ]]; do
+  if screenIsLocked; then
+      /Applications/ffmpeg -f avfoundation -r 30 -i "0"  -frames:v 1 ~/Library/Mobile\ Documents/com~apple~CloudDocs/PasswordWrong/vid-$RANDOM.png
+      sleep 5
+  fi
+done
